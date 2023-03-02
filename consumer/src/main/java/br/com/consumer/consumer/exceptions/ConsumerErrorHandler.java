@@ -1,4 +1,4 @@
-package br.com.consumer.consumer.configuration;
+package br.com.consumer.consumer.exceptions;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -13,12 +13,12 @@ public class ConsumerErrorHandler implements KafkaListenerErrorHandler {
     @Override
     public Object handleError(Message<?> message, ListenerExecutionFailedException exception) {
         log.info("EXCEPTION CAPTURED ::: " + getClass().getName());
-        log.info("Error gerado " + message.getPayload());
+        log.info("Erro gerado " + message.getPayload());
         return null;
     }
 
-//    @Override
-//    public Object handleError(Message<?> message, ListenerExecutionFailedException exception, Consumer<?, ?> consumer) {
-//        return KafkaListenerErrorHandler.super.handleError(message, exception, consumer);
-//    }
+    @Override
+    public Object handleError(Message<?> message, ListenerExecutionFailedException exception, Consumer<?, ?> consumer) {
+        return KafkaListenerErrorHandler.super.handleError(message, exception, consumer);
+    }
 }
